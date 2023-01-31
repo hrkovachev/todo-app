@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat, Helvetica, sans-serif;
+}
+
+:root {
+  --accent-color-1: #628395;
+  --accent-color-2: #878631;
+  --accent-color-3: #dbad6a;
+  --accent-color-4: #c1292e;
+  --background-color: white;
+  --topbar-height: 40px;
+  --sidebar-width: 250px;
+
+  --date-picker-highlight-border: var(--accent-color-1);
+  --date-input-width: 6em;
+  --date-picker-background: white;
+}
+
+.date-time-field input[type="text"] {
+  border: none;
+  color: gray;
+  font-style: oblique;
+  cursor: pointer;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  background: none;
+}
+
+.btn {
+  /*remove default input button styling*/
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  text-transform: capitalize;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.7rem;
+  width: 5rem;
+  height: 1.8rem;
+}
+
+.btn-icn {
+  min-width: 1.2rem;
+  min-height: 1.2rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.btn-main {
+  color: white;
+  background-color: var(--accent-color-1);
+}
+
+.btn-secondary {
+  color: var(--accent-color-1);
+  border: solid 2px var(--accent-color-1);
+  background-color: var(--background-color);
+}
+
+.btn:disabled {
+  background-color: lightgray;
+  color: white;
+  cursor: not-allowed;
+}

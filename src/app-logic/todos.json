@@ -1,0 +1,24 @@
+[
+  {
+    "projectName": "Project 1",
+    "id": 1,
+    "tasks": [
+      {
+        "taskName": "To love Diana",
+        "finished": false,
+        "dueDate": "2023-01-22",
+        "priority": 2,
+        "description": "",
+        "checklist": []
+      },
+      {
+        "taskName": "Go for a walk",
+        "finished": true,
+        "dueDate": "2023-01-22",
+        "priority": 1,
+        "description": "",
+        "checklist": []
+      }
+    ]
+  }
+]

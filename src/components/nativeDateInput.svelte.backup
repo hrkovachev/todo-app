@@ -1,0 +1,24 @@
+<script>
+  import format from "date-fns/format";
+  export let value;
+  export let locale;
+  let selectedDate = format(value, "yyyy-MM-dd");
+  $: value = new Date(selectedDate);
+  console.log(format(value, "yyyy-MM-dd"));
+</script>
+
+<input
+  type="date"
+  id="due-date"
+  name="due-date"
+  bind:value={selectedDate}
+  lang={locale}
+/>
+
+<style>
+  input {
+    border: none;
+    color: gray;
+    font-style: oblique;
+  }
+</style>
