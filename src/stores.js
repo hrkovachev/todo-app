@@ -10,3 +10,5 @@ export const userLang = readable(navigator.language || navigator.userLanguage);
 export const selectedProjectStore = writable([true, 0]);
 
 export const newProjectModal = writable(false);
+export const editProjectModal = writable(false);
+export const editProjectId = writable();

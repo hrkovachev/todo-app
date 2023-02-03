@@ -1,18 +1,40 @@
 <script>
   import Modal from "./Modal.svelte";
-  import { newProjectModal } from "../stores";
+  import { newProjectModal, editProjectModal } from "../stores";
   import { appManager as am } from "../app-logic/AppManager";
   import { onMount } from "svelte";
-  let newProjectName = "";
+
+  export let editMode = false;
+  export let projectId = undefined;
+  let projectName;
+  let btnLabel;
+  let modalTitle;
+  if (editMode) {
+    btnLabel = "Save";
+    let selecteProjet = am.getProject(projectId);
+    projectName = selecteProjet.projectName;
+    modalTitle = `Edit ${projectName}`;
+  } else {
+    btnLabel = "Add";
+    projectName = "";
+    modalTitle = "Add project";
+  }
+
   let projectNameinput;
+
   function handleAddClick() {
-    if (newProjectName.length > 0) {
-      am.createProject(newProjectName);
+    if (projectName.length > 0) {
+      if (editMode) {
+        am.renameProject(projectId, projectName);
+      } else {
+        am.createProject(projectName);
+      }
       handleCloseClick();
     }
   }
   function handleCloseClick() {
     $newProjectModal = false;
+    $editProjectModal = false;
   }
   onMount(() => {
     projectNameinput.focus();
@@ -24,7 +46,7 @@
 
 <div class="new-project">
   <Modal on:enter={handleAddClick} on:close={handleCloseClick}>
-    <h3 slot="header">Add project</h3>
+    <h3 slot="header">{modalTitle}</h3>
 
     <div class="form-field">
       <label for="edit_project_name">Name</label>
@@ -34,7 +56,7 @@
         data-autofocus="true"
         maxlength="120"
         name="name"
-        bind:value={newProjectName}
+        bind:value={projectName}
         bind:this={projectNameinput}
       />
     </div>
@@ -47,8 +69,8 @@
       <!-- svelte-ignore a11y-autofocus -->
       <button
         class="btn btn-main"
-        disabled={btnIsDisabled(newProjectName)}
-        on:click={handleAddClick}>Add</button
+        disabled={btnIsDisabled(projectName)}
+        on:click={handleAddClick}>{btnLabel}</button
       >
     </span>
   </Modal>

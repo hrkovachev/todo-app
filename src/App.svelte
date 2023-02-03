@@ -3,7 +3,7 @@
   import Sidebar from "./components/Sidebar.svelte";
   import Workspace from "./components/Workspace.svelte";
   import ScreenSizeObserver from "./components/ScreenSizeObserver.svelte";
-  import { newProjectModal } from "./stores";
+  import { newProjectModal, editProjectModal, editProjectId } from "./stores";
   import AddNewProject from "./components/AddNewProject.svelte";
 </script>
 
@@ -13,6 +13,8 @@
   <div class="content-wrapper">
     {#if $newProjectModal}
       <AddNewProject />
+    {:else if $editProjectModal}
+      <AddNewProject editMode={true} projectId={$editProjectId} />
     {/if}
     <Sidebar />
     <Workspace />

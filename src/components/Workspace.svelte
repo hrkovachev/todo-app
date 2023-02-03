@@ -2,12 +2,18 @@
   import { flip } from "svelte/animate";
   import { _ } from "lodash";
   import Dots from "svelte-material-icons/DotsHorizontalCircleOutline.svelte";
-  import SymbolButton from "./SymbolButton.svelte";
+
+  import OptionsDropDown from "./OptionsDropDown.svelte";
+  import EditPencil from "svelte-material-icons/PencilOutline.svelte";
+  import DeleteSymbol from "svelte-material-icons/DeleteForeverOutline.svelte";
+  import Plus from "svelte-material-icons/Plus.svelte";
 
   import {
     sidebarVisibleStore,
     mobileDeviceStore,
     selectedProjectStore,
+    editProjectModal,
+    editProjectId,
   } from "../stores";
   import { projectsStore } from "../app-logic/appLogicStores";
 
@@ -16,6 +22,11 @@
 
   let tasks;
   let heading;
+
+  function handleEditProject() {
+    $editProjectModal = true;
+    $editProjectId = $selectedProjectStore[1];
+  }
 
   $: if ($selectedProjectStore[0]) {
     let currProject = $projectsStore.find(
@@ -66,9 +77,30 @@
     <div class="top-area">
       <h2>{heading}</h2>
       <div class="action-buttons">
-        <SymbolButton>
+        {#if $selectedProjectStore[0]}
+          <OptionsDropDown>
+            <Dots slot="button-content" color="gray" size="24px" />
+            <button class="dropdown-item" type="button">
+              <Plus color="gray" size="22" /><span>Add task</span></button
+            >
+
+            <button
+              on:click={handleEditProject}
+              class="dropdown-item"
+              type="button"
+            >
+              <EditPencil color="gray" size="22" /><span>Edit project</span
+              ></button
+            >
+            <button class="dropdown-item" type="button">
+              <DeleteSymbol color="gray" size="22" /><span>Delete project</span
+              ></button
+            >
+          </OptionsDropDown>
+        {/if}
+        <!-- <SymbolButton>
           <Dots color="gray" size="24px" />
-        </SymbolButton>
+        </SymbolButton> -->
       </div>
     </div>
     <div class="tasks-holder">

@@ -34,9 +34,10 @@ class AppManager {
     let projectIndex = this.projects.findIndex(
       (project) => project.projectId === projectId
     );
-    projectsStore.update((projects) =>
-      projects[projectIndex].renameProject(newName)
-    );
+    projectsStore.update((projects) => {
+      projects[projectIndex].projectName = newName;
+      return projects;
+    });
   }
   getProject(projectId) {
     let projectIndex = this.projects.findIndex(
