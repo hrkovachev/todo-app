@@ -12,10 +12,16 @@ export default class Task {
   #taskId;
   // static #tasks = [];
 
-  constructor(title, description, dueDate, priority, finished = false) {
+  constructor(
+    title,
+    description = "",
+    dueDate = null,
+    priority = 1,
+    finished = false
+  ) {
     this.#title = title;
     this.#description = description;
-    this.#dueDate = new Date(dueDate);
+    this.#dueDate = dueDate ? new Date(dueDate) : null;
     this.#priority = priority;
     this.#finished = finished;
     this.#taskId = Task.#taskIdCounter++;

@@ -14,6 +14,7 @@
     selectedProjectStore,
     editProjectModal,
     editProjectId,
+    newTaskModal,
   } from "../stores";
   import { projectsStore } from "../app-logic/appLogicStores";
 
@@ -26,6 +27,10 @@
   function handleEditProject() {
     $editProjectModal = true;
     $editProjectId = $selectedProjectStore[1];
+  }
+
+  function handleAddTask() {
+    $newTaskModal = true;
   }
 
   $: if ($selectedProjectStore[0]) {
@@ -80,7 +85,11 @@
         {#if $selectedProjectStore[0]}
           <OptionsDropDown>
             <Dots slot="button-content" color="gray" size="24px" />
-            <button class="dropdown-item" type="button">
+            <button
+              on:click={handleAddTask}
+              class="dropdown-item"
+              type="button"
+            >
               <Plus color="gray" size="22" /><span>Add task</span></button
             >
 
@@ -105,7 +114,7 @@
     </div>
     <div class="tasks-holder">
       <!-- {#each tasks.sort((a, b) => a.finished - b.finished) as taskItem} -->
-      {#each _.sortBy(tasks, ["finished", "dueDate"]) as taskItem, i (taskItem)}
+      {#each _.orderBy(tasks, ["finished", "dueDate", "priority"], ["asc", "asc", "desc"]) as taskItem, i (taskItem)}
         <div
           class="task-card"
           animate:flip={{ duration: (i) => 30 * Math.sqrt(i) }}
@@ -143,10 +152,12 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    margin-bottom: 1.5em;
   }
   h2 {
     padding-left: 20px;
     margin-top: 0;
+    margin-bottom: 0;
     align-self: flex-start;
   }
   .tasks-holder {

@@ -30,6 +30,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.7em;
+    user-select: none;
   }
   .filter:hover {
     background-color: #eeeeee;

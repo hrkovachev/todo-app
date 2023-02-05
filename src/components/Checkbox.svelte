@@ -5,6 +5,7 @@
 
   export let finished;
   export let taskId;
+  export let color = "#dcdcdc";
 
   let mouseOver;
 </script>
@@ -13,7 +14,7 @@
   <button
     type="button"
     class="task-checkbox"
-    on:click={() => am.changeTaskStatus(taskId)}
+    on:click|stopPropagation={() => am.changeTaskStatus(taskId)}
   >
     <CheckedCircle height="24" width="24" color="#black" />
   </button>
@@ -27,11 +28,11 @@
     on:mouseleave={() => {
       mouseOver = false;
     }}
-    on:click={() => am.changeTaskStatus(taskId)}
+    on:click|stopPropagation={() => am.changeTaskStatus(taskId)}
     >{#if mouseOver}
-      <CheckedCircle height="24" width="24" color="#dcdcdc" />
+      <CheckedCircle height="24" width="24" {color} />
     {:else}
-      <BlankCircle height="24" width="24" color="#dcdcdc" />
+      <BlankCircle height="24" width="24" {color} />
     {/if}
   </button>
 {/if}

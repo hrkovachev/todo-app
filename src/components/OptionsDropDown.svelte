@@ -3,7 +3,7 @@
   let dropdownTrigger;
 </script>
 
-<Dropdown triggerElement={dropdownTrigger}>
+<Dropdown flip={true} placement="bottom" triggerElement={dropdownTrigger}>
   <slot name="button" />
   <button type="button" class="btn-menu" bind:this={dropdownTrigger}>
     <slot name="button-content" />
@@ -37,6 +37,7 @@
     background-color: var(--background-color);
     border: 1px solid gray;
     border-radius: 2px;
+    z-index: 200;
   }
   :global(.dropdown-item) {
     padding: 0.5em;

@@ -1,6 +1,8 @@
 <script>
   import { createEventDispatcher, onDestroy } from "svelte";
 
+  export let modalMaxHeight = "auto";
+  export let modalMinHeight = "auto";
   const dispatch = createEventDispatcher();
   const close = () => dispatch("close");
   const enter = () => dispatch("enter");
@@ -48,7 +50,13 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="modal-background" on:click={close} />
 
-<div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
+<div
+  style="--max-height:{modalMaxHeight};--min-height:{modalMinHeight};"
+  class="modal"
+  role="dialog"
+  aria-modal="true"
+  bind:this={modal}
+>
   <div class="header">
     <slot name="header" />
   </div>
@@ -77,7 +85,9 @@
     top: 50%;
     width: calc(100vw - 4em);
     max-width: 32em;
-    max-height: calc(100vh - 4em);
+    min-height: var(--min-height);
+    max-height: var(--max-height);
+    /* max-height: calc(100vh - 4em); */
     overflow: auto;
     transform: translate(-50%, -50%);
     padding: 1em;
@@ -96,5 +106,6 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    margin-top: auto;
   }
 </style>

@@ -55,6 +55,53 @@ class AppManager {
       return projects;
     });
   }
+  getTask(taskId) {
+    let projectId = this.findTasksProject(taskId);
+    let project = this.getProject(projectId);
+    let task = project.tasks.find((task) => task.taskId === taskId);
+    return task;
+  }
+  updateTask(
+    taskId,
+    newProjectId,
+    newTitle,
+    newDescription,
+    newDueDate,
+    newPriority
+  ) {
+    let projectId = this.findTasksProject(taskId);
+    let projectIndex = this.projects.findIndex(
+      (project) => project.projectId === projectId
+    );
+    projectsStore.update((projects) => {
+      let taskIndex = projects[projectIndex].tasks.findIndex(
+        (task) => task.taskId === taskId
+      );
+      projects[projectIndex].tasks[taskIndex].title = newTitle;
+      projects[projectIndex].tasks[taskIndex].description = newDescription;
+      projects[projectIndex].tasks[taskIndex].dueDate = newDueDate;
+      projects[projectIndex].tasks[taskIndex].priority = newPriority;
+      if (newProjectId !== projectId) {
+        this.moveTask(taskId, newProjectId);
+      }
+      return projects;
+    });
+  }
+
+  moveTask(taskId, newProjectId) {
+    let currProjectId = this.findTasksProject(taskId);
+    if (currProjectId !== newProjectId) {
+      let task = this.getTask(taskId);
+      this.deleteTask(currProjectId, taskId);
+      this.addTask(
+        newProjectId,
+        task.title,
+        task.description,
+        task.dueDate,
+        task.priority
+      );
+    }
+  }
 
   findTasksProject(taskId) {
     let projectId;

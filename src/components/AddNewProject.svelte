@@ -1,8 +1,15 @@
 <script>
   import Modal from "./Modal.svelte";
-  import { newProjectModal, editProjectModal } from "../stores";
+  import { fade } from "svelte/transition";
+  // import OptionsDropDown from "./OptionsDropDown.svelte";
+  import {
+    newProjectModal,
+    editProjectModal,
+    // projectColorsPalette,
+  } from "../stores";
   import { appManager as am } from "../app-logic/AppManager";
   import { onMount } from "svelte";
+  // import Circle from "svelte-material-icons/Circle.svelte";
 
   export let editMode = false;
   export let projectId = undefined;
@@ -13,7 +20,7 @@
     btnLabel = "Save";
     let selecteProjet = am.getProject(projectId);
     projectName = selecteProjet.projectName;
-    modalTitle = `Edit ${projectName}`;
+    modalTitle = `Edit "${projectName}"`;
   } else {
     btnLabel = "Add";
     projectName = "";
@@ -39,13 +46,17 @@
   onMount(() => {
     projectNameinput.focus();
   });
-  function btnIsDisabled(inputField) {
-    return inputField.trim().length < 1;
+  function btnIsDisabled(inputValue) {
+    return inputValue.trim().length < 1;
   }
 </script>
 
-<div class="new-project">
-  <Modal on:enter={handleAddClick} on:close={handleCloseClick}>
+<div class="new-project" transition:fade={{ duration: 100 }}>
+  <Modal
+    on:enter={handleAddClick}
+    on:close={handleCloseClick}
+    modalMaxHeight="calc(100vh - 2em)"
+  >
     <h3 slot="header">{modalTitle}</h3>
 
     <div class="form-field">
@@ -55,11 +66,23 @@
         class="form_field_control"
         data-autofocus="true"
         maxlength="120"
-        name="name"
+        name="edit_project_name"
         bind:value={projectName}
         bind:this={projectNameinput}
       />
     </div>
+    <!-- <div class="form-field">
+      <label for="edit_project_name">Project color</label>
+      <OptionsDropDown>
+        <select slot="button-content" />
+        {#each $projectColorsPalette as color}
+          <button class="dropdown-item" type="button">
+            <Circle color={color.value} size="22" /><span>{color.name}</span
+            ></button
+          >
+        {/each}
+      </OptionsDropDown>
+    </div> -->
 
     <span class="btns-holder" slot="btn-area">
       <!-- svelte-ignore a11y-autofocus -->
@@ -101,5 +124,9 @@
     display: flex;
     flex-direction: row;
     gap: 0.5em;
+  }
+
+  .btns-holder button {
+    font-size: 0.8em;
   }
 </style>

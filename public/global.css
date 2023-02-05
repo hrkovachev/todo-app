@@ -19,7 +19,7 @@ body {
   --date-picker-background: white;
 }
 
-.date-time-field input[type="text"] {
+.task-item .date-time-field input[type="text"] {
   border: none;
   color: gray;
   font-style: oblique;

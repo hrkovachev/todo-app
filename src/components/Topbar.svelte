@@ -16,7 +16,7 @@
     background-color: var(--accent-color-1);
     display: flex;
     align-items: center;
-    z-index: 1000;
+    z-index: 200;
     padding-left: 18px;
   }
 </style>

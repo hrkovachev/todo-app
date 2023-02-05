@@ -4,7 +4,13 @@
   import EditPencil from "svelte-material-icons/PencilOutline.svelte";
   import DeleteSymbol from "svelte-material-icons/DeleteForeverOutline.svelte";
   import { appManager as am } from "../app-logic/AppManager";
-  import { userLang, mobileDeviceStore } from "../stores";
+  import {
+    userLang,
+    mobileDeviceStore,
+    editTaskModal,
+    editTaskId,
+    priorityColorsObj,
+  } from "../stores";
   import { DateInput } from "date-picker-svelte";
   export let projectId = undefined;
   export let task;
@@ -26,10 +32,16 @@
   function onMouseLeave() {
     mouseOver = false;
   }
-  function handleEditClick() {
+
+  function handleNameClick() {
     editMode = true;
     editBox.style.display = "inline";
     editBox.focus();
+  }
+
+  function handleEditClick() {
+    $editTaskId = task.taskId;
+    $editTaskModal = true;
   }
   function handleTaskRename() {
     editMode = false;
@@ -51,14 +63,20 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
   class="task-item"
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
+  on:click={handleEditClick}
   bind:this={card}
 >
   <div class="checkbox">
-    <Checkbox bind:finished={task.finished} taskId={task.taskId} />
+    <Checkbox
+      bind:finished={task.finished}
+      taskId={task.taskId}
+      color={$priorityColorsObj[task.priority]}
+    />
   </div>
   <div class="task-info">
     <div class="upper-row">
@@ -75,7 +93,7 @@
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
           class="task-title"
-          on:click={handleEditClick}
+          on:click|stopPropagation={handleNameClick}
           style="display: {!editMode ? 'inline-block' : 'none'};
             text-decoration: {task.finished ? 'line-through' : 'none'};"
         >
@@ -84,12 +102,15 @@
       </div>
       {#if mouseOver || $mobileDeviceStore || editMode}
         <div class="task-item-right-side" transition:fade={{ duration: 100 }}>
-          <button class="task-item-action" on:click={handleEditClick}>
+          <button
+            class="task-item-action"
+            on:click|stopPropagation={handleEditClick}
+          >
             <EditPencil color="gray" size="22" />
           </button>
           <button
             class="task-item-action"
-            on:click={() =>
+            on:click|stopPropagation={() =>
               am.deleteTask(
                 isNaN(projectId) ? undefined : projectId,
                 task.taskId
@@ -101,8 +122,14 @@
       {/if}
     </div>
     <div class="details">
-      <div class="dueDate">
+      {#if task.description !== ""}
+        <div class="task-description">
+          {task.description}
+        </div>
+      {/if}
+      <div class="due-date">
         <DateInput
+          placeholder="No due date"
           bind:value={date}
           on:select={handleDateChange}
           format="dd.MM.yyyy"
@@ -122,6 +149,7 @@
     border-bottom: 1px solid #ededef;
     user-select: none;
     justify-content: flex-start;
+    cursor: pointer;
   }
   .task-info {
     display: flex;
@@ -187,5 +215,13 @@
   }
   .details {
     padding: 0 0 5px 0;
+  }
+  .task-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-left: 5px;
+    color: gray;
   }
 </style>

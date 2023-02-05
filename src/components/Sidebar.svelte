@@ -14,15 +14,20 @@
   import WeekIcon from "svelte-material-icons/CalendarRange.svelte";
   import Bullet from "svelte-material-icons/CircleSmall.svelte";
   import PlusIcon from "svelte-material-icons/Plus.svelte";
-  import AddNewProject from "./AddNewProject.svelte";
 
   am.createProject("Work");
   am.createProject("Hobby");
 
-  am.addTask(1, "To love Diana", "", new Date("2023-01-26"), 2);
-  am.addTask(2, "Write code", "", new Date("2023-01-26"), 2);
-  am.addTask(1, "Read a book", "", new Date("2023-01-27"), 2);
-  am.addTask(1, "Go for a walk", "", new Date("2023-01-29"), 2);
+  am.addTask(
+    1,
+    "To love Diana",
+    "She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! ",
+    new Date("2023-01-26"),
+    2
+  );
+  am.addTask(2, "Write code", "", new Date("2023-01-26"), 0);
+  am.addTask(1, "Read a book", "", new Date("2023-01-27"), 1);
+  am.addTask(1, "Go for a walk", "", new Date("2023-01-29"), 1);
 
   let projects;
   projectsStore.subscribe((value) => {
