@@ -15,19 +15,19 @@
   import Bullet from "svelte-material-icons/CircleSmall.svelte";
   import PlusIcon from "svelte-material-icons/Plus.svelte";
 
-  am.createProject("Work");
-  am.createProject("Hobby");
+  // am.createProject("Work");
+  // am.createProject("Hobby");
 
-  am.addTask(
-    1,
-    "To love Diana",
-    "She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! ",
-    new Date("2023-01-26"),
-    2
-  );
-  am.addTask(2, "Write code", "", new Date("2023-01-26"), 0);
-  am.addTask(1, "Read a book", "", new Date("2023-01-27"), 1);
-  am.addTask(1, "Go for a walk", "", new Date("2023-01-29"), 1);
+  // am.addTask(
+  //   1,
+  //   "To love Diana",
+  //   "She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! She is wonderful! ",
+  //   new Date("2023-01-26"),
+  //   2
+  // );
+  // am.addTask(2, "Write code", "", new Date("2023-01-26"), 0);
+  // am.addTask(1, "Read a book", "", new Date("2023-01-27"), 1);
+  // am.addTask(1, "Go for a walk", "", new Date("2023-01-29"), 1);
 
   let projects;
   projectsStore.subscribe((value) => {
@@ -103,7 +103,7 @@
             Icon={AllIcon}
             color={"#878631"}
             title={projects[0].projectName}
-            count={projects[0].unfinishedTasks.length}
+            count={projects[0].unfinishedTasks().length}
           />
         </li>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -148,7 +148,7 @@
                 Icon={Bullet}
                 color={"grey"}
                 title={project.projectName}
-                count={project.unfinishedTasks.length}
+                count={project.unfinishedTasks().length}
               />
             </li>
           {/if}

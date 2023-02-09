@@ -203,5 +203,9 @@ class AppManager {
 }
 
 export const appManager = new AppManager();
-// create default project
-appManager.createProject("Start");
+
+projectsStore.subscribe((projectsArray) => {
+  if (projectsArray.length === 0) {
+    appManager.createProject("Start");
+  }
+});

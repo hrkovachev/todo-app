@@ -1,27 +1,46 @@
-// import Task from "./Task";
+import Task from "./Task";
 
 export default class Project {
-  #projectName;
-  static #projectIdCounter = 0;
-  #projectId;
-  tasks = [];
-  #unfinishedTasks;
-  constructor(projectName) {
+  projectName;
+  static projectIdCounter = 0;
+  projectId;
+  tasks;
+  //#unfinishedTasks;
+  constructor(projectName, projectId = undefined, tasks = []) {
     this.projectName = projectName;
-    this.#projectId = Project.#projectIdCounter++;
+    this.projectId = projectId | Project.projectIdCounter++;
+    this.tasks = tasks;
+  }
+  static fromJSON(dataObject) {
+    let tasksArray = dataObject.tasks.map(
+      (task) =>
+        new Task(
+          task.title,
+          task.description,
+          task.dueDate,
+          task.priority,
+          task.finished,
+          task.taskId
+        )
+    );
+    return new Project(
+      dataObject.projectName,
+      dataObject.projectId,
+      tasksArray
+    );
   }
   get projectName() {
-    return this.#projectName;
+    return this.projectName;
   }
   set projectName(newName) {
-    this.#projectName = newName.toString();
+    this.projectName = newName.toString();
   }
 
   get projectId() {
-    return this.#projectId;
+    return this.projectId;
   }
 
-  get unfinishedTasks() {
+  unfinishedTasks() {
     let unfTasks = Array.prototype.filter.call(
       this.tasks,
       (task) => !task.finished

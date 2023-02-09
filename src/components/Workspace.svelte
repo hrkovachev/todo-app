@@ -101,10 +101,17 @@
               <EditPencil color="gray" size="22" /><span>Edit project</span
               ></button
             >
-            <button class="dropdown-item" type="button">
-              <DeleteSymbol color="gray" size="22" /><span>Delete project</span
-              ></button
-            >
+            {#if $selectedProjectStore[1] !== 0}
+              <button
+                on:click={am.deleteProject($selectedProjectStore[1])}
+                class="dropdown-item"
+                type="button"
+              >
+                <DeleteSymbol color="gray" size="22" /><span
+                  >Delete project</span
+                ></button
+              >
+            {/if}
           </OptionsDropDown>
         {/if}
         <!-- <SymbolButton>

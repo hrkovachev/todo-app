@@ -2,14 +2,14 @@ import Checklist from "./Checklist";
 // import Project from "./Project";
 
 export default class Task {
-  #title;
-  #description;
-  #dueDate;
-  #priority; // 0 = low, 1 = normal, 2 = high
-  #finished;
-  #checklist = new Checklist();
-  static #taskIdCounter = 0;
-  #taskId;
+  title;
+  description;
+  dueDate;
+  priority; // 0 = low, 1 = normal, 2 = high
+  finished;
+  checklist = new Checklist();
+  static taskIdCounter = 0;
+  taskId;
   // static #tasks = [];
 
   constructor(
@@ -17,56 +17,57 @@ export default class Task {
     description = "",
     dueDate = null,
     priority = 1,
-    finished = false
+    finished = false,
+    taskId = undefined
   ) {
-    this.#title = title;
-    this.#description = description;
-    this.#dueDate = dueDate ? new Date(dueDate) : null;
-    this.#priority = priority;
-    this.#finished = finished;
-    this.#taskId = Task.#taskIdCounter++;
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate ? new Date(dueDate) : null;
+    this.priority = priority;
+    this.finished = finished;
+    this.taskId = taskId | Task.taskIdCounter++;
     // Task.#tasks.push(this);
   }
   get title() {
-    return this.#title;
+    return this.title;
   }
   set title(newTitle) {
-    this.#title = newTitle;
+    this.title = newTitle;
   }
   get description() {
-    return this.#description;
+    return this.description;
   }
   set description(newdescription) {
-    this.#description = newdescription;
+    this.description = newdescription;
   }
   get dueDate() {
-    return this.#dueDate;
+    return this.dueDate;
   }
   set dueDate(newDueDate) {
-    this.#dueDate = new Date(newDueDate);
+    this.dueDate = new Date(newDueDate);
   }
   get priority() {
-    return this.#priority;
+    return this.priority;
   }
   set priority(priorityLevel) {
-    this.#priority = priorityLevel;
+    this.priority = priorityLevel;
   }
   get finished() {
-    return this.#finished;
+    return this.finished;
   }
   set finished(newStatus) {
-    this.#finished = newStatus;
+    this.finished = newStatus;
   }
 
   get checklist() {
-    return this.#checklist;
+    return this.checklist;
   }
   addChecklistItem(item) {
-    this.#checklist.addItem(item);
+    this.checklist.addItem(item);
   }
 
   get taskId() {
-    return this.#taskId;
+    return this.taskId;
   }
 
   // get projectId() {
