@@ -22,7 +22,7 @@
   let btnLabel;
   let modalTitle;
 
-  let selectedProject = am.getProject(selectedProjectIdforTask);
+  $: selectedProject = am.getProject(selectedProjectIdforTask);
   if (editMode) {
     let task = am.getTask($editTaskId);
     modalTitle = `Edit "${task.title}"`;

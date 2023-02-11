@@ -16,7 +16,7 @@
       <span class="icon"
         ><svelte:component this={Icon} {color} size="22" /></span
       >
-      {title}
+      <span class="title">{title}</span>
     </span>
     <div><span>{count}</span></div>
   </div>
@@ -43,5 +43,15 @@
   }
   .icon {
     margin-right: 0.5em;
+    display: flex;
+    align-items: center;
+  }
+  .title {
+    margin: 0;
+    padding: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 </style>

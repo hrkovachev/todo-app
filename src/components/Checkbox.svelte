@@ -6,7 +6,6 @@
   export let finished;
   export let taskId;
   export let color = "#dcdcdc";
-
   let mouseOver;
 </script>
 

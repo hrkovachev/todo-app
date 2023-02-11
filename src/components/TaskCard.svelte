@@ -11,6 +11,13 @@
     editTaskId,
     priorityColorsObj,
   } from "../stores";
+  import {
+    confirmModalTitle,
+    confirmModalVisibility,
+    confirmModalText,
+    confirmModalBtnLabel,
+    confirmFunction,
+  } from "../confirmModalStores";
   import { DateInput } from "date-picker-svelte";
   export let projectId = undefined;
   export let task;
@@ -61,6 +68,18 @@
       });
     });
   }
+
+  function handleDeleteTask() {
+    $confirmModalTitle = `Delete task "${task.title}"`;
+    $confirmModalText = `Are you sure you want to delete "${task.title}"?`;
+    $confirmModalBtnLabel = "Delete";
+    $confirmFunction = am.deleteTask.bind(
+      am,
+      isNaN(projectId) ? undefined : projectId,
+      task.taskId
+    );
+    $confirmModalVisibility = true;
+  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -68,7 +87,6 @@
   class="task-item"
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
-  on:click={handleEditClick}
   bind:this={card}
 >
   <div class="checkbox">
@@ -110,11 +128,7 @@
           </button>
           <button
             class="task-item-action"
-            on:click|stopPropagation={() =>
-              am.deleteTask(
-                isNaN(projectId) ? undefined : projectId,
-                task.taskId
-              )}
+            on:click|stopPropagation={handleDeleteTask}
           >
             <DeleteSymbol color="gray" size="22" />
           </button>
@@ -149,7 +163,6 @@
     border-bottom: 1px solid #ededef;
     user-select: none;
     justify-content: flex-start;
-    cursor: pointer;
   }
   .task-info {
     display: flex;

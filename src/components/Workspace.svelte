@@ -16,6 +16,13 @@
     editProjectId,
     newTaskModal,
   } from "../stores";
+  import {
+    confirmModalTitle,
+    confirmModalVisibility,
+    confirmModalText,
+    confirmModalBtnLabel,
+    confirmFunction,
+  } from "../confirmModalStores";
   import { projectsStore } from "../app-logic/appLogicStores";
 
   import { appManager as am } from "../app-logic/AppManager";
@@ -29,14 +36,32 @@
     $editProjectId = $selectedProjectStore[1];
   }
 
+  function handleDeleteProject() {
+    $confirmModalTitle = `Delete project "${heading}"`;
+    $confirmModalText = `Are you sure you want to delete "${heading}"?`;
+    $confirmModalBtnLabel = "Delete";
+    $confirmFunction = am.deleteProject.bind(am, $selectedProjectStore[1]);
+    $confirmModalVisibility = true;
+  }
+
   function handleAddTask() {
     $newTaskModal = true;
   }
 
-  $: if ($selectedProjectStore[0]) {
-    let currProject = $projectsStore.find(
+  function getCurrProject(projects) {
+    let currProject = projects.find(
       (project) => project.projectId === $selectedProjectStore[1]
     );
+    if (!currProject) {
+      $selectedProjectStore = [true, 0];
+      projects = $projectsStore;
+      currProject = getCurrProject($projectsStore);
+    }
+    return currProject;
+  }
+
+  $: if ($selectedProjectStore[0]) {
+    let currProject = getCurrProject($projectsStore);
     tasks = currProject.tasks;
     heading = currProject.projectName;
   } else {
@@ -103,7 +128,7 @@
             >
             {#if $selectedProjectStore[1] !== 0}
               <button
-                on:click={am.deleteProject($selectedProjectStore[1])}
+                on:click={handleDeleteProject}
                 class="dropdown-item"
                 type="button"
               >

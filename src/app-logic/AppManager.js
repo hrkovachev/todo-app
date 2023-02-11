@@ -125,7 +125,7 @@ class AppManager {
     let projectIndex = this.projects.findIndex(
       (project) => project.projectId === projectId
     );
-    let taskIndex = this.projects[projectId].tasks.findIndex(
+    let taskIndex = this.projects[projectIndex].tasks.findIndex(
       (task) => task.taskId === taskId
     );
     projectsStore.update((projects) => {
@@ -180,23 +180,29 @@ class AppManager {
 
   changeTaskStatus(taskId) {
     let projectId = this.findTasksProject(taskId);
+    let projectIndex = this.projects.findIndex(
+      (project) => project.projectId === projectId
+    );
     projectsStore.update((projects) => {
-      let taskIndex = projects[projectId].tasks.findIndex(
+      let taskIndex = projects[projectIndex].tasks.findIndex(
         (task) => task.taskId === taskId
       );
-      projects[projectId].tasks[taskIndex].finished =
-        !projects[projectId].tasks[taskIndex].finished;
+      projects[projectIndex].tasks[taskIndex].finished =
+        !projects[projectIndex].tasks[taskIndex].finished;
       return projects;
     });
   }
 
   changeTaskDate(taskId, newDate) {
     let projectId = this.findTasksProject(taskId);
+    let projectIndex = this.projects.findIndex(
+      (project) => project.projectId === projectId
+    );
     projectsStore.update((projects) => {
-      let taskIndex = projects[projectId].tasks.findIndex(
+      let taskIndex = projects[projectIndex].tasks.findIndex(
         (task) => task.taskId === taskId
       );
-      projects[projectId].tasks[taskIndex].dueDate = newDate;
+      projects[projectIndex].tasks[taskIndex].dueDate = newDate;
       return projects;
     });
   }

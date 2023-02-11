@@ -101,7 +101,7 @@
         <li on:click={() => handleProjectClick(0)}>
           <SidebarFilterElement
             Icon={AllIcon}
-            color={"#878631"}
+            color={"var(--accent-color-2)"}
             title={projects[0].projectName}
             count={projects[0].unfinishedTasks().length}
           />
@@ -110,7 +110,7 @@
         <li on:click={() => handleFilterClick("today")}>
           <SidebarFilterElement
             Icon={TodayIcon}
-            color={"#DBAD6A"}
+            color={"var(--accent-color-3)"}
             title="Today"
             count={todaysCount}
           />
@@ -119,7 +119,7 @@
         <li on:click={() => handleFilterClick("week")}>
           <SidebarFilterElement
             Icon={WeekIcon}
-            color={"#C1292E"}
+            color={"var(--accent-color-4)"}
             title="This week"
             count={weeksCount}
           />

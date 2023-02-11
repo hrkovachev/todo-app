@@ -11,8 +11,10 @@
     editTaskModal,
     editTaskId,
   } from "./stores";
+  import { confirmModalVisibility } from "./confirmModalStores";
   import AddNewProject from "./components/AddNewProject.svelte";
   import AddEditTask from "./components/AddEditTask.svelte";
+  import ConfirmModal from "./components/ConfirmModal.svelte";
 </script>
 
 <main>
@@ -27,6 +29,8 @@
       <AddEditTask />
     {:else if $editTaskModal}
       <AddEditTask editMode={true} taskId={$editTaskId} />
+    {:else if $confirmModalVisibility}
+      <ConfirmModal />
     {/if}
     <Sidebar />
     <Workspace />
