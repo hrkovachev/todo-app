@@ -5,10 +5,14 @@ body {
 }
 
 :root {
-  --accent-color-1: #628395;
+  /* --accent-color-1: #628395;
   --accent-color-2: #878631;
   --accent-color-3: #dbad6a;
-  --accent-color-4: #c1292e;
+  --accent-color-4: #c1292e; */
+  --accent-color-1: #264653;
+  --accent-color-2: #e76f51;
+  --accent-color-3: #9f86c0;
+  --accent-color-4: #85baa1;
   --background-color: white;
   --font-color: black;
   --topbar-height: 40px;
@@ -55,6 +59,11 @@ body {
 .btn-main {
   color: white;
   background-color: var(--accent-color-1);
+}
+
+.btn-delete {
+  color: white;
+  background-color: red;
 }
 
 .btn-secondary {
