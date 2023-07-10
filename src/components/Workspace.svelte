@@ -31,6 +31,9 @@
   let tasks;
   let heading;
 
+  let backgroundClass;
+  let emptyText;
+
   function handleEditProject() {
     $editProjectModal = true;
     $editProjectId = $selectedProjectStore[1];
@@ -64,15 +67,26 @@
     let currProject = getCurrProject($projectsStore);
     tasks = currProject.tasks;
     heading = currProject.projectName;
+    if (currProject.projectId === 0) {
+      backgroundClass = "add-tasks";
+      emptyText = "Start planning by adding some tasks.";
+    } else {
+      backgroundClass = "project-empty";
+      emptyText = "Looks like you have no tasks in this project.";
+    }
   } else {
     switch ($selectedProjectStore[1]) {
       case "today":
         tasks = am.getTodaysTasks();
         heading = "Today";
+        backgroundClass = "done-for-today";
+        emptyText = "Super, all done for today!";
         break;
       case "week":
         tasks = am.getThisWeeksTasks();
         heading = "This week";
+        backgroundClass = "done-for-week";
+        emptyText = "Yeay, week is clear. Let's go party!";
         break;
       default:
         tasks = [];
@@ -144,17 +158,22 @@
         </SymbolButton> -->
       </div>
     </div>
-    <div class="tasks-holder">
-      <!-- {#each tasks.sort((a, b) => a.finished - b.finished) as taskItem} -->
-      {#each _.orderBy(tasks, ["finished", "dueDate", "priority"], ["asc", "asc", "desc"]) as taskItem, i (taskItem)}
-        <div
-          class="task-card"
-          animate:flip={{ duration: (i) => 30 * Math.sqrt(i) }}
-        >
-          <TaskCard projectId={$selectedProjectStore[1]} task={taskItem} />
-        </div>
-      {/each}
-    </div>
+    {#if tasks.length === 0}
+      <div class="background-holder {backgroundClass}">
+        <h4>{emptyText}</h4>
+      </div>
+    {:else}
+      <div class="tasks-holder">
+        {#each _.orderBy(tasks, ["finished", "dueDate", "priority"], ["asc", "asc", "desc"]) as taskItem, i (taskItem)}
+          <div
+            class="task-card"
+            animate:flip={{ duration: (i) => 30 * Math.sqrt(i) }}
+          >
+            <TaskCard projectId={$selectedProjectStore[1]} task={taskItem} />
+          </div>
+        {/each}
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -203,5 +222,27 @@
   .task-card {
     max-width: min(90%, 1000px);
     min-width: 90%;
+  }
+  .background-holder {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+
+    background-size: max(250px, 35%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    user-select: none;
+  }
+  .add-tasks {
+    background-image: url("./img/add_tasks.svg");
+  }
+  .project-empty {
+    background-image: url("./img/project_empty.svg");
+  }
+  .done-for-today {
+    background-image: url("./img/done_for_today.svg");
+  }
+  .done-for-week {
+    background-image: url("./img/done_for_week.svg");
   }
 </style>
