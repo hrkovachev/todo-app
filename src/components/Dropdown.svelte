@@ -61,20 +61,20 @@ toggle between hiding and showing the dropdown content */
   }
 
   /* Links inside the dropdown */
-  .dropdown-content a {
+  /* .dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-  }
+  } */
 
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {
+  /* .dropdown-content a:hover {
     background-color: #ddd;
-  }
+  } */
 
   /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-  .show {
+  /* .show {
     display: block;
-  }
+  } */
 </style>
